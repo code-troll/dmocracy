@@ -23,10 +23,10 @@ contract Dmocracy is Ownable {
 
     function addProposal(address creator, bytes32 name, bytes32 hash) public returns (bool success) {
         // name must not be empty
-        require(name.length != 0);
+        require(name[0] != 0);
 
         // hash must not be empty
-        require(hash.length != 0);
+        require(hash[0] != 0);
 
         // Require that the proposal has not been initialized
         require(!proposals[name].initialized);
@@ -43,6 +43,10 @@ contract Dmocracy is Ownable {
         NewProposal(creator, name, hash);
 
         return true;
+    }
+
+    function getProposal(bytes32 name) public constant returns (bytes32, uint256) {
+        return (proposals[name].hash, proposals[name].votes);
     }
 
     function Dmocracy() public {
