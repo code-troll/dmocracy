@@ -71,4 +71,5 @@ contract('Dmocracy', function (accounts) {
             expect(errMessage).to.equal("VM Exception while processing transaction: invalid opcode");
         }
     });
+
 });
