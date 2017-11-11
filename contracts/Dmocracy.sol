@@ -14,8 +14,10 @@ contract Dmocracy is Ownable {
     bool initialized;
     bytes32 hash;
     uint256 votes;
+    mapping (address => bool) voters;
     }
 
+    // Msp of proposals
     mapping (bytes32 => Proposal) proposals;
 
     // New Proposal event
@@ -49,8 +51,26 @@ contract Dmocracy is Ownable {
         return (proposals[name].hash, proposals[name].votes);
     }
 
-    function Dmocracy() public {
+    function getProposalVotes(bytes32 name) public constant returns (uint256) {
+        return proposals[name].votes;
+    }
 
+    function vote(address voter, bytes32 proposalName) public returns (bool success) {
+        require(proposals[proposalName].initialized);
+
+        require(!proposals[proposalName].voters[voter]);
+
+        proposals[proposalName].votes++;
+        proposals[proposalName].voters[voter] = true;
+
+        return true;
+    }
+
+    function removeVote(address voter, bytes32 proposalName) {
+
+    }
+
+    function Dmocracy() Ownable() public {
     }
 
 

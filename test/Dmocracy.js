@@ -2,6 +2,7 @@ const Dmocracy = artifacts.require("./Dmocracy.sol");
 const expect = require("chai").expect;
 const utils = require("./Utils");
 let dmocracy;
+let proposal;
 let name;
 let hash;
 const emptyString = '0x0000000000000000000000000000000000000000000000000000000000000000';
@@ -57,7 +58,7 @@ contract('Dmocracy', function (accounts) {
         await dmocracy.addProposal(accounts[0], name, hash);
 
         // Checks that the proposal correspond to the added one
-        let proposal = await dmocracy.getProposal(name);
+        proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
         expect(utils.hexToString(proposal[0])).to.equal(hash);
 
@@ -70,6 +71,22 @@ contract('Dmocracy', function (accounts) {
             // Check that the error is the one we want
             expect(errMessage).to.equal("VM Exception while processing transaction: invalid opcode");
         }
+    });
+    it("There was a problem voting!", async function () {
+        let errMessage;
+        name = 'test5_name';
+        hash = 'test5_hash';
+
+        // Add the first proposal
+        await dmocracy.addProposal(accounts[0], name, hash);
+
+        // Checks that the proposal correspond to the added one
+        proposal = await dmocracy.getProposal(name);
+        // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
+        expect(utils.hexToString(proposal[0])).to.equal(hash);
+
+        // The vote to the proposal is executed
+        await dmocracy.vote(accounts[0], name);
     });
 
 });
