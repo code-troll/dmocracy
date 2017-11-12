@@ -47,8 +47,12 @@ contract Dmocracy is Ownable {
         return true;
     }
 
-    function getProposal(bytes32 name) public constant returns (bytes32, uint256) {
-        return (proposals[name].hash, proposals[name].votes);
+    function getProposal(bytes32 name) public constant returns (bool, bytes32, uint256) {
+        return (proposals[name].initialized, proposals[name].hash, proposals[name].votes);
+    }
+
+    function getProposalHash(bytes32 name) public constant returns (bytes32) {
+        return proposals[name].hash;
     }
 
     function getProposalVotes(bytes32 name) public constant returns (uint256) {
@@ -66,8 +70,15 @@ contract Dmocracy is Ownable {
         return true;
     }
 
-    function removeVote(address voter, bytes32 proposalName) {
+    function removeVote(address voter, bytes32 proposalName) public returns (bool success) {
+        require(proposals[proposalName].initialized);
 
+        require(proposals[proposalName].voters[voter]);
+
+        proposals[proposalName].votes--;
+        proposals[proposalName].voters[voter] = false;
+
+        return true;
     }
 
     function Dmocracy() Ownable() public {
