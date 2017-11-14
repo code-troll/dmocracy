@@ -25,7 +25,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(tx.origin, name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
     }
 
     function testVote() public {
@@ -35,7 +35,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(tx.origin, name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
 
         Assert.equal(dmocracy.vote(tx.origin, name), expected, "There was a problem voting!");
 
@@ -49,7 +49,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(tx.origin, name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
 
         Assert.equal(dmocracy.getProposalVotes(name), 0, "The votes count should be 0!");
 

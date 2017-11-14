@@ -6,6 +6,7 @@ let proposal;
 let name;
 let hash;
 let errMessage;
+let proposalsQty = 0;
 const emptyString = '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 contract('Dmocracy', function (accounts) {
@@ -21,19 +22,21 @@ contract('Dmocracy', function (accounts) {
         expect(initialProposal[1]).to.equal(emptyString);
 
         // Add the proposal
-        await dmocracy.addProposal(accounts[0], name, hash);
+        await dmocracy.addProposal(name, hash);
 
         // Checks that the proposal correspond to the added one
         let finalProposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
         expect(utils.hexToString(finalProposal[1])).to.equal(hash);
+
+        proposalsQty++;
     });
     it("The proposal was added with an empty name!", async function () {
         hash = 'test2_hash';
 
         try {
             // Add the proposal
-            await dmocracy.addProposal(accounts[0], '', hash);
+            await dmocracy.addProposal('', hash);
         } catch (err) {
             // Check that the error is the one we want
             expect(err.message).to.equal("VM Exception while processing transaction: invalid opcode");
@@ -44,7 +47,7 @@ contract('Dmocracy', function (accounts) {
 
         try {
             // Add the proposal
-            await dmocracy.addProposal(accounts[0], name, '');
+            await dmocracy.addProposal(name, '');
         } catch (err) {
             // Check that the error is the one we want
             expect(err.message).to.equal("VM Exception while processing transaction: invalid opcode");
@@ -55,16 +58,18 @@ contract('Dmocracy', function (accounts) {
         hash = 'test4_hash';
 
         // Add the first proposal
-        await dmocracy.addProposal(accounts[0], name, hash);
+        await dmocracy.addProposal(name, hash);
 
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
         expect(utils.hexToString(proposal[1])).to.equal(hash);
 
+        proposalsQty++;
+
         try {
             // The proposal is tried to be added again
-            await dmocracy.addProposal(accounts[1], name, hash);
+            await dmocracy.addProposal(name, hash);
         } catch (err) {
             errMessage = err.message;
         } finally {
@@ -77,12 +82,14 @@ contract('Dmocracy', function (accounts) {
         hash = 'test5_hash';
 
         // Add the first proposal
-        await dmocracy.addProposal(accounts[0], name, hash);
+        await dmocracy.addProposal(name, hash);
 
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
         expect(utils.hexToString(proposal[1])).to.equal(hash);
+
+        proposalsQty++;
 
         // The vote to the proposal is executed
         await dmocracy.vote(accounts[0], name);
@@ -95,7 +102,9 @@ contract('Dmocracy', function (accounts) {
         hash = 'test6_hash';
 
         // Add the first proposal
-        await dmocracy.addProposal(accounts[0], name, hash);
+        await dmocracy.addProposal(name, hash);
+
+        proposalsQty++;
 
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
@@ -114,6 +123,13 @@ contract('Dmocracy', function (accounts) {
             // Check that the error is the one we want
             expect(errMessage).to.equal("VM Exception while processing transaction: invalid opcode");
         }
+    });
+    it("The proposal quantity in wrong!", async function () {
+        // Get all the proposals
+        let proposals = await dmocracy.getProposals();
+
+        // Check that the proposals quantity match
+        expect(proposals.length).to.equal(proposalsQty);
     });
 
 });

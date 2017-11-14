@@ -21,9 +21,12 @@ contract Dmocracy is Ownable {
     mapping (bytes32 => Proposal) proposals;
 
     // New Proposal event
-    event NewProposal(address creator, bytes32 name, bytes32 hash);
+    event NewProposal(address creator, bytes32 indexed name, bytes32 hash);
 
-    function addProposal(address creator, bytes32 name, bytes32 hash) public returns (bool success) {
+    // Vote event
+    event Vote(bytes32 proposalName, uint256 votes, address voter);
+
+    function addProposal(bytes32 name, bytes32 hash) public returns (bool success) {
         // name must not be empty
         require(name[0] != 0);
 
@@ -40,11 +43,16 @@ contract Dmocracy is Ownable {
 
         // The new proposal is added to the proposals map
         proposals[name] = newProposal;
+        names.push(name);
 
         // Send a new proposal event
-        NewProposal(creator, name, hash);
+        NewProposal(msg.sender, name, hash);
 
         return true;
+    }
+
+    function getProposals() public constant returns (bytes32[]) {
+        return names;
     }
 
     function getProposal(bytes32 name) public constant returns (bool, bytes32, uint256) {
@@ -67,6 +75,9 @@ contract Dmocracy is Ownable {
         proposals[proposalName].votes++;
         proposals[proposalName].voters[voter] = true;
 
+        // Send a vote event
+        Vote(proposalName, proposals[proposalName].votes, voter);
+
         return true;
     }
 
@@ -77,6 +88,9 @@ contract Dmocracy is Ownable {
 
         proposals[proposalName].votes--;
         proposals[proposalName].voters[voter] = false;
+
+        // Send a vote event
+        Vote(proposalName, proposals[proposalName].votes, voter);
 
         return true;
     }
