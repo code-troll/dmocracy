@@ -61,4 +61,20 @@ contract TestDmocracy {
 
         Assert.equal(dmocracy.getProposalVotes(name), 0, "The votes count should be 0!");
     }
+
+    function testHasProposalBeenVoted() public {
+        Dmocracy dmocracy = Dmocracy(DeployedAddresses.Dmocracy());
+
+        bytes32 name = utils.stringToBytes32('HasProposalBeenVotedTest1');
+
+        bool expected = true;
+
+        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
+
+        Assert.equal(dmocracy.hasProposalBeenVoted(tx.origin, name), false, "There was a problem checking a user vote!");
+
+        Assert.equal(dmocracy.vote(tx.origin, name), expected, "There was a problem voting!");
+
+        Assert.equal(dmocracy.hasProposalBeenVoted(tx.origin, name), expected, "There was a problem checking a user vote!");
+    }
 }
