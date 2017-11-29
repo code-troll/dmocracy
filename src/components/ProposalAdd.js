@@ -49,13 +49,13 @@ export default class ProposalAdd extends Component {
 
     async onProposalAdded(name, hash) {
         console.log(this.props.appState);
-        const {dmocracyInstance, defaultAccount} = this.props.appState;
+        const {dmocracyInstance, selectedAccount} = this.props.appState;
         console.log(`
             It's about upload a new proposal: ${name}.
-            The default account is ${defaultAccount}
+            The default account is ${selectedAccount}
             The dmocracy instance address is ${dmocracyInstance.address}
         `);
-        await dmocracyInstance.addProposal(name, hash, {from: defaultAccount})
+        await dmocracyInstance.addProposal(name, hash, {from: selectedAccount})
     };
 
     render() {

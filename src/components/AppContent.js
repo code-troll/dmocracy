@@ -18,6 +18,7 @@ import AppMenuList from './AppMenuList';
 import ProposalList from './ProposalList';
 import ProposalAdd from './ProposalAdd';
 import ProposalDetails from './ProposalDetails';
+import AccountSelection from './AccountSelection';
 
 const drawerWidth = 240;
 
@@ -99,6 +100,16 @@ const styles = theme => ({
             marginTop: 64,
         },
     },
+    toolBarRight: {
+        float: 'right',
+        width: '92%'
+    },
+    applicationTitle: {
+        float: 'left'
+    },
+    accountSelected: {
+        float: 'right'
+    }
 });
 
 class AppContent extends React.Component {
@@ -142,9 +153,14 @@ class AppContent extends React.Component {
                             >
                                 <MenuIcon/>
                             </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
-                                Dmocracy
-                            </Typography>
+                            <div className={classes.toolBarRight}>
+                                <Typography className={classes.applicationTitle} type="title" color="inherit" noWrap>
+                                    Dmocracy
+                                </Typography>
+                                <Typography className={classes.accountSelected} type="title" color="inherit" noWrap>
+                                    Account: {this.props.appState.selectedAccount}
+                                </Typography>
+                            </div>
                         </Toolbar>
                     </AppBar>
                     <Drawer
@@ -178,6 +194,9 @@ class AppContent extends React.Component {
                                     case "proposalDetails":
                                         return <ProposalDetails handleLayerChange={this.handleLayerChange}
                                                                 appState={this.props.appState}/>;
+                                    // case "accountSelection":
+                                    //     return <AccountSelection handleLayerChange={this.handleLayerChange}
+                                    //                              appState={this.props.appState}/>;
                                     default:
                                         return <ProposalList handleLayerChange={this.handleLayerChange}
                                                              appState={this.props.appState}/>;

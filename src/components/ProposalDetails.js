@@ -51,11 +51,11 @@ class ProposalDetails extends Component {
     }
 
     async getProposal(proposalName) {
-        const {dmocracyInstance, defaultAccount} = this.props.appState;
+        const {dmocracyInstance, selectedAccount} = this.props.appState;
 
         try {
             let proposalData = await dmocracyInstance.getProposal(proposalName);
-            let voted = await dmocracyInstance.hasProposalBeenVoted(defaultAccount, proposalName);
+            let voted = await dmocracyInstance.hasProposalBeenVoted(selectedAccount, proposalName);
             this.setState({
                 ...this.state,
                 proposal: {
@@ -72,11 +72,11 @@ class ProposalDetails extends Component {
     };
 
     async handleVote(event) {
-        const {dmocracyInstance, defaultAccount} = this.props.appState;
+        const {dmocracyInstance, selectedAccount} = this.props.appState;
 
         try {
             console.log('lala');
-            let vote = await dmocracyInstance.vote(defaultAccount, this.state.proposal.name, {from: defaultAccount});
+            let vote = await dmocracyInstance.vote(selectedAccount, this.state.proposal.name, {from: selectedAccount});
             console.log(vote);
             this.setState({
                 ...this.state,
@@ -90,10 +90,10 @@ class ProposalDetails extends Component {
     }
 
     async handleRemoveVote(event) {
-        const {dmocracyInstance, defaultAccount} = this.props.appState;
+        const {dmocracyInstance, selectedAccount} = this.props.appState;
 
         try {
-            let vote = await dmocracyInstance.removeVote(defaultAccount, this.state.proposal.name, {from: defaultAccount});
+            let vote = await dmocracyInstance.removeVote(selectedAccount, this.state.proposal.name, {from: selectedAccount});
             this.setState({
                 ...this.state,
                 proposal: {

@@ -19,8 +19,8 @@ export default class App extends Component {
         // Set default state
         this.state = {
             proposals: [],
-            logs: [],
-            defaultAccount: undefined,
+            availableAccounts: [],
+            selectedAccount: undefined,
             dmocracyInstance: undefined,
             errorMessage: undefined,
             web3: undefined,
@@ -44,6 +44,7 @@ export default class App extends Component {
         dmocracy.setProvider(web3.currentProvider);
 
         const accounts = await promisify(web3.eth.getAccounts);
+
         const defaultAccount = accounts[0];
 
         const dmocracyInstance = await dmocracy.deployed();
@@ -51,7 +52,8 @@ export default class App extends Component {
         this.setState({
             ...this.state,
             web3,
-            defaultAccount,
+            availableAccounts: accounts,
+            selectedAccount: defaultAccount,
             dmocracyInstance,
         });
     };
@@ -60,15 +62,15 @@ export default class App extends Component {
         const {web3, dmocracyInstance} = this.state;
 
         dmocracyInstance.NewProposal().watch((error, result) => {
-            if (error) {
-                console.log(`Nooooo! ${error}`);
-            } else {
-                console.log(`Result ${JSON.stringify(result.args)}`);
+            if (!error) {
+                // console.log(`Result ${JSON.stringify(result.args)}`);
                 // const proposalCreator = result.args.proposal;
                 const proposalName = web3.toAscii(result.args.name).replace(/\u0000/g, '');
                 // const proposalHash = web3.toAscii(result.args.hash).replace(/\u0000/g, '');
                 this.setState({...this.state, proposals: [...this.state.proposals, proposalName]});
                 this.log(`New proposal added: ${proposalName}`);
+            } else {
+                // console.log(`Nooooo! ${error}`);
             }
         })
     };

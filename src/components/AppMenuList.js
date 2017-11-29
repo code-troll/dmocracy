@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import PlusOneIcon from 'material-ui-icons/PlusOne';
+import AccountCircle from 'material-ui-icons/AccountBox';
 import PollIcon from 'material-ui-icons/Poll';
 import ListIcon from 'material-ui-icons/List';
 
@@ -35,11 +35,12 @@ class AppMenuList extends React.Component {
                         </ListItemIcon>
                         <ListItemText primary="Create Proposal"/>
                     </ListItem>
-                    {/*<ListItem button>*/}
+                    {/*<Divider/>*/}
+                    {/*<ListItem button onClick={() => this.props.handleLayerChange('accountSelection')}>*/}
                         {/*<ListItemIcon>*/}
-                            {/*<PlusOneIcon/>*/}
+                            {/*<AccountCircle/>*/}
                         {/*</ListItemIcon>*/}
-                        {/*<ListItemText primary="Vote"/>*/}
+                        {/*<ListItemText primary="Choose Account"/>*/}
                     {/*</ListItem>*/}
                 </List>
             </div>
