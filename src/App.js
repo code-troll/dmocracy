@@ -62,15 +62,15 @@ export default class App extends Component {
         const {web3, dmocracyInstance} = this.state;
 
         dmocracyInstance.NewProposal().watch((error, result) => {
-            if (!error) {
+            if (error) {
+                // console.log(`Nooooo! ${error}`);
+            } else {
                 // console.log(`Result ${JSON.stringify(result.args)}`);
                 // const proposalCreator = result.args.proposal;
                 const proposalName = web3.toAscii(result.args.name).replace(/\u0000/g, '');
                 // const proposalHash = web3.toAscii(result.args.hash).replace(/\u0000/g, '');
                 this.setState({...this.state, proposals: [...this.state.proposals, proposalName]});
-                this.log(`New proposal added: ${proposalName}`);
-            } else {
-                // console.log(`Nooooo! ${error}`);
+                // this.log(`New proposal added: ${proposalName}`);
             }
         })
     };
