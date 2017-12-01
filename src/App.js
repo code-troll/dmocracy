@@ -10,7 +10,9 @@ import getWeb3 from './utils/getWeb3'
 import promisify from './utils/promisify'
 
 // App
+import AppHome from './components/AppHome.js'
 import AppContent from './components/AppContent.js'
+import AppBottomBar from './components/AppBottomBar.js'
 
 export default class App extends Component {
     constructor(props) {
@@ -18,6 +20,7 @@ export default class App extends Component {
 
         // Set default state
         this.state = {
+            home: false,
             proposals: [],
             availableAccounts: [],
             selectedAccount: undefined,
@@ -79,9 +82,20 @@ export default class App extends Component {
         this.setState({...this.state, logs: [...this.state.logs, text]})
     };
 
+    handleGetInside() {
+        this.setState({home: false});
+    }
+
     render() {
         return (
-            <AppContent appState={this.state}/>
+            <div>
+                {this.state.home ? (
+                    <AppHome handleGetInside={this.handleGetInside.bind(this)}/>
+                ) : (
+                    <AppContent appState={this.state}/>
+                )}
+                <AppBottomBar/>
+            </div>
         );
     };
 }

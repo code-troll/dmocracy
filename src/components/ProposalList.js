@@ -86,7 +86,7 @@ export default class ProposalList extends Component {
                             <TableCell>{proposal}</TableCell>
                             <TableCell>
                                 <IconButton color="primary" aria-label="Proposal details">
-                                    <Visibility onClick={() => this.viewProposal(proposal)}/>
+                                    <Visibility style={{fontSize: '150% !important'}} onClick={() => this.viewProposal(proposal)}/>
                                 </IconButton>
                             </TableCell>
                         </TableRow>

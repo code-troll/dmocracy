@@ -9,13 +9,10 @@ import "../contracts/Utils.sol";
 
 contract TestDmocracy {
 
-    bytes32 hash;
-
     Utils utils;
 
     function TestDmocracy() public {
         utils = Utils(DeployedAddresses.Utils());
-        hash = utils.stringToBytes32('535d219ca6cd93c162f1d0362594c2eb032305109e8746df86d2eaf872011d1a');
     }
 
     function testNewProposal() public {
@@ -25,7 +22,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, '535d219ca6cd93c162f1d0362594c2eb032305109e8746df86d2eaf872011d1a'), expected, "The proposal could not be added!");
     }
 
     function testVote() public {
@@ -35,7 +32,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, '535d219ca6cd93c162f1d0362594c2eb032305109e8746df86d2eaf872011d1a'), expected, "The proposal could not be added!");
 
         Assert.equal(dmocracy.vote(tx.origin, name), expected, "There was a problem voting!");
 
@@ -49,7 +46,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, '535d219ca6cd93c162f1d0362594c2eb032305109e8746df86d2eaf872011d1a'), expected, "The proposal could not be added!");
 
         Assert.equal(dmocracy.getProposalVotes(name), 0, "The votes count should be 0!");
 
@@ -69,7 +66,7 @@ contract TestDmocracy {
 
         bool expected = true;
 
-        Assert.equal(dmocracy.addProposal(name, hash), expected, "The proposal could not be added!");
+        Assert.equal(dmocracy.addProposal(name, '535d219ca6cd93c162f1d0362594c2eb032305109e8746df86d2eaf872011d1a'), expected, "The proposal could not be added!");
 
         Assert.equal(dmocracy.hasProposalBeenVoted(tx.origin, name), false, "There was a problem checking a user vote!");
 

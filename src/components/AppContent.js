@@ -100,15 +100,17 @@ const styles = theme => ({
             marginTop: 64,
         },
     },
-    toolBarRight: {
-        float: 'right',
-        width: '92%'
-    },
+    // toolBarRight: {
+    //     float: 'right',
+    //     width: '92%'
+    // },
     applicationTitle: {
         float: 'left'
     },
     accountSelected: {
-        float: 'right'
+        // float: 'right'
+        position: 'absolute',
+        right: '10px'
     }
 });
 
@@ -153,14 +155,14 @@ class AppContent extends React.Component {
                             >
                                 <MenuIcon/>
                             </IconButton>
-                            <div className={classes.toolBarRight}>
+                            {/*<div className={classes.toolBarRight}>*/}
                                 <Typography className={classes.applicationTitle} type="title" color="inherit" noWrap>
                                     Dmocracy
                                 </Typography>
                                 <Typography className={classes.accountSelected} type="title" color="inherit" noWrap>
                                     Account: {this.props.appState.selectedAccount}
                                 </Typography>
-                            </div>
+                            {/*</div>*/}
                         </Toolbar>
                     </AppBar>
                     <Drawer

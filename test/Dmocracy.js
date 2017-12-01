@@ -7,7 +7,7 @@ let name;
 let hash;
 let errMessage;
 let proposalsQty = 0;
-const emptyString = '0x0000000000000000000000000000000000000000000000000000000000000000';
+const emptyBytes32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 contract('Dmocracy', function (accounts) {
     it("The proposal could not be added!", async function () {
@@ -19,15 +19,16 @@ contract('Dmocracy', function (accounts) {
 
         // Checks that the proposal does not exists
         let initialProposal = await dmocracy.getProposal(name);
-        expect(initialProposal[1]).to.equal(emptyString);
+        expect(initialProposal[1]).to.equal('');
 
         // Add the proposal
         await dmocracy.addProposal(name, hash);
 
         // Checks that the proposal correspond to the added one
         let finalProposal = await dmocracy.getProposal(name);
+
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
-        expect(utils.hexToString(finalProposal[1])).to.equal(hash);
+        expect(finalProposal[1]).to.equal(hash);
 
         proposalsQty++;
     });
@@ -63,7 +64,7 @@ contract('Dmocracy', function (accounts) {
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
-        expect(utils.hexToString(proposal[1])).to.equal(hash);
+        expect(proposal[1]).to.equal(hash);
 
         proposalsQty++;
 
@@ -87,7 +88,7 @@ contract('Dmocracy', function (accounts) {
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
-        expect(utils.hexToString(proposal[1])).to.equal(hash);
+        expect(proposal[1]).to.equal(hash);
 
         proposalsQty++;
 
@@ -109,7 +110,7 @@ contract('Dmocracy', function (accounts) {
         // Checks that the proposal correspond to the added one
         proposal = await dmocracy.getProposal(name);
         // The hexadecimal hash from the contract is converted to ascii and is compared with the original hash
-        expect(utils.hexToString(proposal[1])).to.equal(hash);
+        expect(proposal[1]).to.equal(hash);
 
         // The vote to the proposal is executed
         await dmocracy.vote(accounts[0], name);

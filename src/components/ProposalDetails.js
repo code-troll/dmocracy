@@ -13,7 +13,6 @@ const styles = theme => ({
         textAlign: 'center'
     },
     proposalTitle: {
-        fontSize: '220%'
     },
     proposalDataContainer: {
         padding: '20px',

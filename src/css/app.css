@@ -1,0 +1,15 @@
+main[class^=AppContent] * {
+    font-size: 102% !important;
+}
+main[class^=AppContent] svg[class^=MuiSvgIcon] {
+    font-size: 150% !important;
+}
+main[class^=AppContent] [class^=ProposalDetails-proposalTitle] {
+    font-size: 200% !important;
+}
+main[class^=AppContent] [class^=ProposalDetails-proposalDataLabel] {
+    font-size: 110% !important;
+}
+main[class^=AppContent] [class^=ProposalDetails-proposalData] {
+    font-size: 110% !important;
+}
